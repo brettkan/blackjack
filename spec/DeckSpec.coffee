@@ -33,26 +33,16 @@ describe 'deck', ->
 
   describe 'bust', ->
     it 'should register a bust on hit', ->
-      sinon.spy(hand, 'trigger')
-      hand.bust()
-      expect(hand.trigger).to.have.been.calledWith('bust', hand)
+      bustSpy = sinon.spy(Hand.prototype, 'bust')
 
-
-
-    xit 'should register a bust if hand score is over 21', ->
       tenOfSpades = new Card rank: 10, suit: 0
       tenOfClubs = new Card rank: 10, suit: 2
       aceOfSpades = new Card rank: 1, suit: 0
-      aceOfHearts = new Card rank: 1, suit: 3
-      twoOfSpades = new Card rank: 2, suit: 0
 
       handOne = new Hand [tenOfSpades, tenOfClubs, aceOfSpades], deck
-      handTwo = new Hand [tenOfSpades, tenOfClubs, twoOfSpades], deck
-      handThree = new Hand [tenOfSpades, aceOfSpades], deck
 
       handOne.hit()
+      assert.isFalse bustSpy.calledTwice
+      assert.isTrue bustSpy.calledOnce
 
-      ## assert.strictEqual handOne.bust,
-      # assert.strictEqual handTwo.score(), 22
-      # assert.strictEqual handThree.score(), 21
 

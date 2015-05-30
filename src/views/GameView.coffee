@@ -7,7 +7,7 @@ class window.GameView extends Backbone.View
 
   initialize: ->
     @render()
-    @model
+    # @model
 
   render: ->
     @$el.children().detach()
