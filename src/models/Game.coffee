@@ -15,9 +15,7 @@ class window.Game extends Backbone.Model
       hand.revealFirstCard()
       while hand.score() < 17
         hand.hit()
-      if hand.score() > 21
-        hand.bust()
-      else
+      if hand.score() <= 21
         @endGame()
 
   # Couldn't get this syntax to work...
@@ -51,15 +49,16 @@ class window.Game extends Backbone.Model
       @dealerWins()
     else
       @tie()
+    @trigger 'endGame', @
 
   playerWins: ->
-    console.log 'Player wins'
+    alert 'Player wins'
 
   dealerWins: ->
-    console.log 'Dealer wins'
+    alert 'Dealer wins'
 
   tie: ->
-    console.log 'Game results in push'
+    alert 'Game results in push'
 
 
 
