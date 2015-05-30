@@ -14,7 +14,6 @@ class window.Hand extends Backbone.Collection
     currentCard
 
   stand: ->
-    debugger
     @trigger 'playerStand', @
 
   hasAce: -> @reduce (memo, card) ->

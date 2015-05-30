@@ -6,25 +6,40 @@ class window.Game extends Backbone.Model
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
-    (@get 'playerHand').on 'bust', @handlePlayerBust
-    (@get 'dealerHand').on 'bust', => @handleDealerBust()
-    (@get 'playerHand').on 'playerStand', => @handlePlayerStand()
+    (@get 'playerHand').on 'bust', =>
+      @dealerWins()
+    (@get 'dealerHand').on 'bust', =>
+      @playerWins()
+    (@get 'playerHand').on 'playerStand', =>
+      hand = @get 'dealerHand'
+      hand.revealFirstCard()
+      while hand.score() < 17
+        hand.hit()
+      if hand.score() > 21
+        hand.bust()
+      else
+        @endGame()
 
-  handlePlayerBust: =>
-    @trigger 'playerBust', @
+  # Couldn't get this syntax to work...
+  #   (@get 'playerHand').on 'bust', @handlePlayerBust, @
+  #   (@get 'dealerHand').on 'bust', => @handleDealerBust()
+  #   (@get 'playerHand').on 'playerStand', => @handlePlayerStand()
 
-  handleDealerBust: =>
-    @trigger 'dealerBust', @
+  # handlePlayerBust: =>
+  #   @trigger 'playerBust', @
 
-  handlePlayerStand: =>
-    hand = @get 'dealerHand'
-    hand.revealFirstCard()
-    while hand.score() < 17
-      hand.hit()
-    if hand.score() > 21
-      hand.bust()
-    else
-      @endGame()
+  # handleDealerBust: =>
+  #   @trigger 'dealerBust', @
+
+  # handlePlayerStand: =>
+  #   hand = @get 'dealerHand'
+  #   hand.revealFirstCard()
+  #   while hand.score() < 17
+  #     hand.hit()
+  #   if hand.score() > 21
+  #     hand.bust()
+  #   else
+  #     @endGame()
 
 
   endGame: =>
