@@ -2,13 +2,20 @@
 class window.Hand extends Backbone.Collection
   model: Card
 
+  # defaults:
+  #   finalScore: 0
+
   initialize: (array, @deck, @isDealer) ->
 
   hit: ->
     currentCard = @deck.pop()
     @add(currentCard)
-    if @checkBust() then bust()
+    if @checkBust() then @bust()
     currentCard
+
+  stand: ->
+    debugger
+    @trigger 'playerStand', @
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
@@ -35,4 +42,7 @@ class window.Hand extends Backbone.Collection
 
   bust: ->
     @trigger 'bust', @
+
+  revealFirstCard: ->
+    @at(0).flip()
 

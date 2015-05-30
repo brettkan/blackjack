@@ -7,6 +7,7 @@ class window.GameView extends Backbone.View
 
   initialize: ->
     @render()
+    @model
 
   render: ->
     @$el.children().detach()
@@ -14,9 +15,9 @@ class window.GameView extends Backbone.View
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
 
-  handleHit: ->
+  handlePlayerHit: ->
     @model.get('playerHand').hit()
 
-  handleStand: ->
+  handlePlayerStand: ->
     @model.get('playerHand').stand()
 

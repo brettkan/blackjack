@@ -6,8 +6,8 @@ class window.AppView extends Backbone.View
   '
 
   events:
-    'click .hit-button': 'handleHit'
-    'click .stand-button': 'handleStand'
+    'click .hit-button': 'handlePlayerHit'
+    'click .stand-button': 'handlePlayerStand'
 
   initialize: ->
     @render()
@@ -18,9 +18,9 @@ class window.AppView extends Backbone.View
     @gameView = new GameView(model: @model.get 'game')
     @$('.game').html @gameView.el
 
-  handleHit: ->
-    @gameView.handleHit()
+  handlePlayerHit: ->
+    @gameView.handlePlayerHit()
 
-  handleStand: ->
-    @gameView.handleStand()
+  handlePlayerStand: ->
+    @gameView.handlePlayerStand()
 
