@@ -4,24 +4,7 @@
 class window.Game extends Backbone.Model
   initialize: ->
     @set 'deck', deck = new Deck()
-    @set 'playerHand', deck.dealPlayer()
-    @set 'dealerHand', deck.dealDealer()
-    (@get 'playerHand').on 'bust', =>
-      @dealerWins()
-    (@get 'dealerHand').on 'bust', =>
-      @playerWins()
-    (@get 'playerHand').on 'playerStand', =>
-      hand = @get 'dealerHand'
-      hand.revealFirstCard()
-      while hand.score() < 17
-        hand.hit()
-      if hand.score() <= 21
-        @endGame()
-
-  # Couldn't get this syntax to work...
-  #   (@get 'playerHand').on 'bust', @handlePlayerBust, @
-  #   (@get 'dealerHand').on 'bust', => @handleDealerBust()
-  #   (@get 'playerHand').on 'playerStand', => @handlePlayerStand()
+    @gameSetup()
 
   endGame: =>
     playerScore = @get('playerHand').score()
@@ -43,28 +26,30 @@ class window.Game extends Backbone.Model
     @trigger 'dealerWins', @
     @refreshGame()
 
+  playerStand: ->
+    hand = @get 'dealerHand'
+    hand.revealFirstCard()
+    while hand.score() < 17
+      hand.hit()
+    if hand.score() <= 21
+      @endGame()
+
   tie: ->
     alert 'Game results in push'
     @refreshGame()
 
   refreshGame: ->
+    @gameSetup()
+    @trigger 'endGame', @
+
+  gameSetup: ->
     deck = @get('deck')
+    console.log deck.length
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
-    (@get 'playerHand').on 'bust', =>
-      @dealerWins()
-    (@get 'dealerHand').on 'bust', =>
-      @playerWins()
-    (@get 'playerHand').on 'playerStand', =>
-      hand = @get 'dealerHand'
-      hand.revealFirstCard()
-      while hand.score() < 17
-        hand.hit()
-      if hand.score() <= 21
-        @endGame()
-    @trigger 'endGame', @
-    console.log(deck.length)
-
+    (@get 'playerHand').on 'bust', => @dealerWins()
+    (@get 'dealerHand').on 'bust', => @playerWins()
+    (@get 'playerHand').on 'playerStand', => @playerStand()
 
 
 
