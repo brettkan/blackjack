@@ -48,8 +48,22 @@ class window.Game extends Backbone.Model
     @refreshGame()
 
   refreshGame: ->
-    @initialize()
+    deck = @get('deck')
+    @set 'playerHand', deck.dealPlayer()
+    @set 'dealerHand', deck.dealDealer()
+    (@get 'playerHand').on 'bust', =>
+      @dealerWins()
+    (@get 'dealerHand').on 'bust', =>
+      @playerWins()
+    (@get 'playerHand').on 'playerStand', =>
+      hand = @get 'dealerHand'
+      hand.revealFirstCard()
+      while hand.score() < 17
+        hand.hit()
+      if hand.score() <= 21
+        @endGame()
     @trigger 'endGame', @
+    console.log(deck.length)
 
 
 
