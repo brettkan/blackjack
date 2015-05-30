@@ -19,9 +19,3 @@ describe 'game', ->
 
       game.set 'playerHand', handOne
       game.trigger 'endGame'
-
-      # setTimeout (->
-      #   console.log game.get('playerHand').length
-      #   assert.strictEqual game.get('playerHand').length, 2
-      #   return
-      # ), 1000

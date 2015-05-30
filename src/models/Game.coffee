@@ -35,10 +35,12 @@ class window.Game extends Backbone.Model
 
   playerWins: ->
     alert 'Player wins'
+    @trigger 'playerWins', @
     @refreshGame()
 
   dealerWins: ->
     alert 'Dealer wins'
+    @trigger 'dealerWins', @
     @refreshGame()
 
   tie: ->
