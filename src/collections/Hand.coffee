@@ -2,9 +2,6 @@
 class window.Hand extends Backbone.Collection
   model: Card
 
-  # defaults:
-  #   finalScore: 0
-
   initialize: (array, @deck, @isDealer) ->
 
   hit: ->

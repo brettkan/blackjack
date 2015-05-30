@@ -1,4 +1,5 @@
 assert = chai.assert
+expect = chai.expect
 
 describe 'deck', ->
   deck = null
@@ -31,7 +32,11 @@ describe 'deck', ->
       assert.strictEqual handThree.score(), 21
 
   describe 'bust', ->
-    xit 'should register a bust on hit', ->
+    it 'should register a bust on hit', ->
+      sinon.spy(hand, 'trigger')
+      hand.bust()
+      expect(hand.trigger).to.have.been.calledWith('bust', hand)
+
 
 
     xit 'should register a bust if hand score is over 21', ->
@@ -41,9 +46,11 @@ describe 'deck', ->
       aceOfHearts = new Card rank: 1, suit: 3
       twoOfSpades = new Card rank: 2, suit: 0
 
-      ## handOne = new Hand [tenOfSpades, tenOfClubs, aceOfSpades], deck
-      ## handTwo = new Hand [tenOfSpades, tenOfClubs, twoOfSpades], deck
-      ## handThree = new Hand [tenOfSpades, aceOfSpades], deck
+      handOne = new Hand [tenOfSpades, tenOfClubs, aceOfSpades], deck
+      handTwo = new Hand [tenOfSpades, tenOfClubs, twoOfSpades], deck
+      handThree = new Hand [tenOfSpades, aceOfSpades], deck
+
+      handOne.hit()
 
       ## assert.strictEqual handOne.bust,
       # assert.strictEqual handTwo.score(), 22
