@@ -23,23 +23,6 @@ class window.Game extends Backbone.Model
   #   (@get 'dealerHand').on 'bust', => @handleDealerBust()
   #   (@get 'playerHand').on 'playerStand', => @handlePlayerStand()
 
-  # handlePlayerBust: =>
-  #   @trigger 'playerBust', @
-
-  # handleDealerBust: =>
-  #   @trigger 'dealerBust', @
-
-  # handlePlayerStand: =>
-  #   hand = @get 'dealerHand'
-  #   hand.revealFirstCard()
-  #   while hand.score() < 17
-  #     hand.hit()
-  #   if hand.score() > 21
-  #     hand.bust()
-  #   else
-  #     @endGame()
-
-
   endGame: =>
     playerScore = @get('playerHand').score()
     dealerScore = @get('dealerHand').score()
@@ -49,16 +32,27 @@ class window.Game extends Backbone.Model
       @dealerWins()
     else
       @tie()
-    @trigger 'endGame', @
 
   playerWins: ->
     alert 'Player wins'
+    @refreshGame()
 
   dealerWins: ->
     alert 'Dealer wins'
+    @refreshGame()
 
   tie: ->
     alert 'Game results in push'
+    @refreshGame()
+
+  refreshGame: ->
+    @initialize()
+    @trigger 'endGame', @
+
+
+
+
+
 
 
 

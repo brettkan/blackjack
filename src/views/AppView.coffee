@@ -12,7 +12,7 @@ class window.AppView extends Backbone.View
   initialize: ->
     @render()
 
-    @model.on 'change:game', =>
+    @model.get('game').on 'endGame', =>
       @render()
 
   render: ->
