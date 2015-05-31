@@ -24,7 +24,6 @@ class window.AppView extends Backbone.View
 
   render: ->
     @$el.children().detach()
-    # debugger
     @$el.html @template @model.attributes
     @gameView = new GameView(model: @model.get 'game')
     @$('.game').html @gameView.el

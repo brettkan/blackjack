@@ -10,16 +10,9 @@ class window.App extends Backbone.Model
 
     context = @
     @get('game').on 'playerWins', ->
-      # console.dir context
       newValue = context.get('purse') + context.get('currentBet')
-      # console.log newValue
       context.set 'purse', newValue
-      console.log newValue
 
     @get('game').on 'dealerWins', ->
-      # console.dir context
       newValue = context.get('purse') - context.get('currentBet')
-      # console.log newValue
       context.set 'purse', newValue
-      # console.log newValue
-
