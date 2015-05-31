@@ -43,15 +43,19 @@ class window.Game extends Backbone.Model
     @trigger 'endGame', @
 
   gameSetup: ->
+    if @get('deck').length < 20
+      @getNewDeck()
+      @trigger 'newDeck', @
+
     deck = @get('deck')
-    console.log deck.length
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
     (@get 'playerHand').on 'bust', => @dealerWins()
     (@get 'dealerHand').on 'bust', => @playerWins()
     (@get 'playerHand').on 'playerStand', => @playerStand()
 
-
+  getNewDeck: ->
+    @set 'deck', new Deck()
 
 
 
